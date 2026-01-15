@@ -5,45 +5,44 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.nio.channels.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import static com.cdlicn.netty.c1.ByteBufferUtil.debugRead;
 
 @Slf4j
 public class Server {
     public static void main(String[] args) throws IOException {
-        // 使用 selector 来理解阻塞模式
-        // 0. ByteBuffer
-        ByteBuffer buffer = ByteBuffer.allocate(16);
-        // 1. 创建了服务器
+        // 1. 创建 selector，管理多个 channel
+        Selector selector = Selector.open();
         ServerSocketChannel ssc = ServerSocketChannel.open();
-        ssc.configureBlocking(false); // 非阻塞
-        // 2. 绑定监听端口
+        ssc.configureBlocking(false);
+
+        // 2. 调用 selector 和 channel 的联系（注册）
+        //SelectionKey 将来事件发生后，通过它可以知道事件和哪个 channel 的事件
+        SelectionKey sscKey = ssc.register(selector, 0, null);
+        // key 只关注 accept 事件
+        sscKey.interestOps(SelectionKey.OP_ACCEPT);
+        log.debug("register key: {}", sscKey);
+
         ssc.bind(new InetSocketAddress(8080));
-        // 3. 连接集合
-        List<SocketChannel> channels = new ArrayList<>();
         while (true) {
-            // 4. accept 建立与客户端的连接，SocketChannel 用来与客户端之间通信
-//            log.debug("connecting...");
-            SocketChannel sc = ssc.accept(); // [阻塞方法，线程停止运行(之前)]，非阻塞，线程还会继续运行，如果没有连接建立，会返回null
-            if (sc != null) {
-                log.debug("connected... {}", sc);
-                sc.configureBlocking(false); // 非阻塞
-                channels.add(sc);
-            }
-            for (SocketChannel channel : channels) {
-                // 5. 接受客户端发送的数据
-//                log.debug("before read... {}", channel);
-                int read = channel.read(buffer);//  [阻塞方法，线程停止运行(之前)]，非阻塞，线程还会继续运行，如果没有读到数据，会返回0
-                if (read > 0) {
-                    buffer.flip();
-                    debugRead(buffer);
-                    buffer.clear();
-                    log.debug("after read... {}", channel);
-                }
+            // 3. select 方法，没有事件发生，线程阻塞；有事件，线程才恢复运行
+            // select 在事件未处理时，它不会阻塞，事件发生后要么处理，要么取消，不能置之不理
+            selector.select();
+
+            // 4. 处理事件，SelectedKeys 内部包含了所有发生的事件
+            Iterator<SelectionKey> iter = selector.selectedKeys().iterator();
+            while (iter.hasNext()) {
+                SelectionKey key = iter.next();
+                log.debug("key: {}", key);
+                /*ServerSocketChannel channel = (ServerSocketChannel) key.channel();
+                SocketChannel sc = channel.accept();
+                log.info("{}", sc);*/
+                key.cancel();
             }
         }
     }
