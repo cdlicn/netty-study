@@ -13,8 +13,8 @@ public class TestByteBufferAllocate {
         System.out.println(ByteBuffer.allocate(16).getClass());
         System.out.println(ByteBuffer.allocateDirect(16).getClass());
         /*
-        class java.nio.HeapByteBuffer     - java 堆内存，读写效率较低，收到 GC 的影响
-        class java.nio.DirectByteBuffer   - 直接内存，读写效率高（少一次拷贝），不会收 GC 影响，分配的效率低
+        class java.selector.HeapByteBuffer     - java 堆内存，读写效率较低，收到 GC 的影响
+        class java.selector.DirectByteBuffer   - 直接内存，读写效率高（少一次拷贝），不会收 GC 影响，分配的效率低
          */
     }
 }
