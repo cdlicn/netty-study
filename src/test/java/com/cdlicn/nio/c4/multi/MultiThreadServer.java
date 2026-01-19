@@ -1,4 +1,4 @@
-package com.cdlicn.netty.c4.multi;
+package com.cdlicn.nio.c4.multi;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -7,10 +7,9 @@ import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
 import java.util.Iterator;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.cdlicn.netty.c1.ByteBufferUtil.debugAll;
+import static com.cdlicn.nio.c1.ByteBufferUtil.debugAll;
 
 
 @Slf4j

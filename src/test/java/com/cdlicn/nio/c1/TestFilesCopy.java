@@ -1,4 +1,4 @@
-package com.cdlicn.netty.c1;
+package com.cdlicn.nio.c1;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -6,8 +6,8 @@ import java.nio.file.Paths;
 
 public class TestFilesCopy {
     public static void main(String[] args) throws IOException {
-        String source = "/Users/li/note/netty-study/files";
-        String target = "/Users/li/note/netty-study/files-copy";
+        String source = "/Users/li/note/nio-study/files";
+        String target = "/Users/li/note/nio-study/files-copy";
 
         Files.walk(Paths.get(source)).forEach(path -> {
             try {

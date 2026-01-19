@@ -1,12 +1,9 @@
-package com.cdlicn.netty.c1;
-
-import io.netty.buffer.ByteBuf;
+package com.cdlicn.nio.c1;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-import static com.cdlicn.netty.c1.ByteBufferUtil.debugAll;
+import static com.cdlicn.nio.c1.ByteBufferUtil.debugAll;
 
 /**
  * @author cdlicn

@@ -1,4 +1,4 @@
-package com.cdlicn.netty.c1;
+package com.cdlicn.nio.c1;
 
 import java.io.IOException;
 import java.nio.file.*;
@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class TestFilesWalkFileTree {
     public static void main(String[] args) throws IOException {
-        Files.walkFileTree(Paths.get("/Users/li/note/netty-study/files"), new SimpleFileVisitor<Path>() {
+        Files.walkFileTree(Paths.get("/Users/li/note/nio-study/files"), new SimpleFileVisitor<Path>() {
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
 //                System.out.println("====> 进入" + dir);

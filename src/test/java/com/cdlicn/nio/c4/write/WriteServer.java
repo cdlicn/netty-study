@@ -1,4 +1,4 @@
-package com.cdlicn.netty.c4.write;
+package com.cdlicn.nio.c4.write;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

@@ -1,4 +1,4 @@
-package com.cdlicn.netty.c1;
+package com.cdlicn.nio.c1;
 
 import io.netty.util.internal.StringUtil;
 

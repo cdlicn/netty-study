@@ -1,4 +1,4 @@
-package com.cdlicn.netty.c4.selector;
+package com.cdlicn.nio.c4.selector;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -6,14 +6,9 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
-import static com.cdlicn.netty.c1.ByteBufferUtil.debugAll;
-import static com.cdlicn.netty.c1.ByteBufferUtil.debugRead;
+import static com.cdlicn.nio.c1.ByteBufferUtil.debugAll;
 
 @Slf4j
 public class Server {

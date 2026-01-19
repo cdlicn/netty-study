@@ -1,6 +1,5 @@
-package com.cdlicn.netty.c4;
+package com.cdlicn.nio.c4;
 
-import io.netty.buffer.ByteBuf;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -11,7 +10,7 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.cdlicn.netty.c1.ByteBufferUtil.debugRead;
+import static com.cdlicn.nio.c1.ByteBufferUtil.debugRead;
 
 @Slf4j
 public class Server {
