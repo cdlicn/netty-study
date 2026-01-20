@@ -16,7 +16,7 @@ import java.net.InetSocketAddress;
 import java.util.Scanner;
 
 @Slf4j
-public class CliseFutureClient {
+public class CloseFutureClient {
     public static void main(String[] args) throws InterruptedException {
         NioEventLoopGroup group = new NioEventLoopGroup();
         ChannelFuture channelFuture = new Bootstrap()
