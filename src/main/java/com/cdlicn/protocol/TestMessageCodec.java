@@ -8,11 +8,17 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.logging.LoggingHandler;
 
 public class TestMessageCodec {
-
     public static void main(String[] args) throws Exception {
+        // 没有被 @Sharable 修饰，不能被多个线程共享使用
+//        LengthFieldBasedFrameDecoder FRAME_DECODER = new LengthFieldBasedFrameDecoder(1024, 12, 4, 0, 0);
+
+        // @Sharable 说明是线程安全的，可以被多个线程共享使用
+        LoggingHandler LOGGING_HANDLER = new LoggingHandler();
+
         EmbeddedChannel channel = new EmbeddedChannel(
+//                FRAME_DECODER, // 解码器
                 new LengthFieldBasedFrameDecoder(1024, 12, 4, 0, 0), // 解码器
-                new LoggingHandler(),
+                LOGGING_HANDLER,
                 new MessageCodec()
         );
 

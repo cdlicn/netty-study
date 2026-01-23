@@ -4,21 +4,30 @@ import com.cdlicn.message.Message;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageCodec;
+import io.netty.handler.codec.MessageToMessageCodec;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.ByteBuffer;
 import java.util.List;
 
+/**
+ * @author cdlicn
+ * @date 2026年01月23日 23:38
+ * @description
+ */
 @Slf4j
-//@ChannelHandler.Sharable 不可使用
-public class MessageCodec extends ByteToMessageCodec<Message> {
-
+@ChannelHandler.Sharable
+/**
+ * 必须和 LengthFieldBasedFrameDecoder 一起使用，确保接到的 ByteBuf 消息是完整的
+ */
+public class MessageCodecSharable extends MessageToMessageCodec<ByteBuf, Message> {
     @Override
-    protected void encode(ChannelHandlerContext channelHandlerContext, Message message, ByteBuf byteBuf) throws Exception {
+    protected void encode(ChannelHandlerContext channelHandlerContext, Message message, List<Object> outList) throws Exception {
+        ByteBuf byteBuf = channelHandlerContext.alloc().buffer();
         // 1. 4个字节的魔数
         byteBuf.writeBytes(new byte[]{1, 2, 3, 4});
         // 2. 1个字节的版本号
@@ -40,6 +49,8 @@ public class MessageCodec extends ByteToMessageCodec<Message> {
         byteBuf.writeInt(bytes.length);
         // 9. 写入内容
         byteBuf.writeBytes(bytes);
+
+        outList.add(byteBuf);
     }
 
     @Override
