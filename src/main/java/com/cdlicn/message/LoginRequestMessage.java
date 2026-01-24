@@ -10,7 +10,6 @@ import lombok.*;
 public class LoginRequestMessage extends Message {
     private String username;
     private String password;
-    private String nickname;
 
     /**
      * 获取消息列
